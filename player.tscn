@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://ct5d2wtofnjau"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_6ysrt"]
+[ext_resource type="Texture2D" uid="uid://coea5sin2vvx7" path="res://art/player_running_transparent.png" id="1_wvdsk"]
+[ext_resource type="Texture2D" uid="uid://cps3efjywpwdl" path="res://art/player_running2_transparent.png" id="2_ydiib"]
+[ext_resource type="Texture2D" uid="uid://c8a52px412cwh" path="res://art/player_standing_transparent.png" id="3_m0ppg"]
+[ext_resource type="Texture2D" uid="uid://dkgxm0kvujogb" path="res://art/player_standing2_transparent.png" id="4_ps3ix"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dvcdd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wvdsk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ydiib")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_m0ppg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ps3ix")
+}],
+"loop": true,
+"name": &"standing",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1aw1y"]
+size = Vector2(100, 218)
+
+[node name="Player" type="Area2D"]
+position = Vector2(539, 297)
+script = ExtResource("1_6ysrt")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dvcdd")
+animation = &"standing"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, -24)
+shape = SubResource("RectangleShape2D_1aw1y")
