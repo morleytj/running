@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @export var run_speed = 350
-@export var jump_speed = -1000
+@export var jump_speed = -1150
 @export var gravity = 2500
 var screen_size
+var jump_max = 2
+@export var jump_count = 0
 
 signal jumping
 signal landed
@@ -19,17 +21,22 @@ func get_input():
 	velocity.x = 0
 	var right = Input.is_action_pressed("move_right")
 	var left = Input.is_action_pressed("move_left")
-	var jump = Input.is_action_pressed("jump")
 	
-	if is_on_floor() and jump:
+	#use is_action_just_pressed so as not to multi count jumps
+	if jump_count<jump_max and Input.is_action_just_pressed("jump"):
+		print(jump_count)
 		velocity.y = jump_speed
+		jump_count+=1
 	if right:
 		velocity.x += run_speed
 	if left:
 		velocity.x -= run_speed
 
+
 func _physics_process(delta):
 	velocity.y += gravity * delta
+	if is_on_floor() and jump_count!=0:
+		jump_count=0
 	get_input()
 	move_and_slide()
 
@@ -42,4 +49,7 @@ func _process(delta):
 	else:
 		$AnimatedSprite2D.animation = "standing"
 
-
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false

@@ -1,20 +1,52 @@
-[gd_scene load_steps=3 format=3 uid="uid://b4ayayle4uta0"]
+[gd_scene load_steps=7 format=3 uid="uid://b4ayayle4uta0"]
 
+[ext_resource type="Script" path="res://main.gd" id="1_68f62"]
 [ext_resource type="PackedScene" uid="uid://dy5wmmt36xvma" path="res://floor.tscn" id="1_wjm1g"]
 [ext_resource type="PackedScene" uid="uid://ct5d2wtofnjau" path="res://player.tscn" id="2_ihsri"]
+[ext_resource type="PackedScene" uid="uid://cfi4x8dursukx" path="res://falling_platform.tscn" id="2_rgmqg"]
+
+[sub_resource type="Curve2D" id="Curve2D_4l70m"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_48qq4"]
+size = Vector2(480, 17)
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_68f62")
+platform_scene = ExtResource("2_rgmqg")
 
 [node name="Floor" parent="." instance=ExtResource("1_wjm1g")]
+position = Vector2(240, 592)
 
 [node name="Player" parent="." instance=ExtResource("2_ihsri")]
-position = Vector2(539, 162)
+position = Vector2(448, 312)
 
-[node name="Floor2" parent="." instance=ExtResource("1_wjm1g")]
-position = Vector2(910, 222)
+[node name="PlatformSpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_4l70m")
 
-[node name="Floor3" parent="." instance=ExtResource("1_wjm1g")]
-position = Vector2(205, 419)
+[node name="PlatformSpawnLocation" type="PathFollow2D" parent="PlatformSpawnPath"]
 
-[node name="Floor4" parent="." instance=ExtResource("1_wjm1g")]
-position = Vector2(195, 160)
+[node name="PlatformTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="ArtifactTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="DeathZone" type="Area2D" parent="."]
+position = Vector2(256, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+position = Vector2(-16, 0.5)
+shape = SubResource("RectangleShape2D_48qq4")
+
+[node name="StartPosition" type="Marker2D" parent="."]
+position = Vector2(240, 512)
+
+[connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
