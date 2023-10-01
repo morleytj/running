@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://df8ep1r4hi20w"]
+
+[ext_resource type="Texture2D" uid="uid://b6pd1i77cypav" path="res://art/bookSprite.png" id="1_3mi6y"]
+[ext_resource type="Script" path="res://book.gd" id="1_jkbfg"]
+
+[node name="book" type="RigidBody2D"]
+gravity_scale = 0.2
+script = ExtResource("1_jkbfg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(24, 16)
+scale = Vector2(1, 1)
+texture = ExtResource("1_3mi6y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(24, 16)
+scale = Vector2(0.825, 0.9)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
