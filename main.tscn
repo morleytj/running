@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4ayayle4uta0"]
+[gd_scene load_steps=10 format=3 uid="uid://b4ayayle4uta0"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_68f62"]
 [ext_resource type="PackedScene" uid="uid://dy5wmmt36xvma" path="res://floor.tscn" id="1_wjm1g"]
 [ext_resource type="PackedScene" uid="uid://ct5d2wtofnjau" path="res://player.tscn" id="2_ihsri"]
 [ext_resource type="PackedScene" uid="uid://cfi4x8dursukx" path="res://falling_platform.tscn" id="2_rgmqg"]
 [ext_resource type="PackedScene" uid="uid://df8ep1r4hi20w" path="res://book.tscn" id="3_uvqxe"]
+[ext_resource type="Texture2D" uid="uid://dp4sxrxdebnbu" path="res://art/flamesprite.png" id="6_w5rra"]
 
 [sub_resource type="Curve2D" id="Curve2D_4l70m"]
 _data = {
@@ -51,7 +52,7 @@ one_shot = true
 position = Vector2(256, 720)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
-position = Vector2(-16, 0.5)
+position = Vector2(-16, 0)
 shape = SubResource("RectangleShape2D_48qq4")
 
 [node name="StartPosition" type="Marker2D" parent="."]
@@ -61,6 +62,15 @@ position = Vector2(240, 512)
 curve = SubResource("Curve2D_smtud")
 
 [node name="ArtifactSpawnLocation" type="PathFollow2D" parent="ArtifactSpawnPath"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+position = Vector2(240, 716)
+scale = Vector2(19.2, 0.959998)
+texture = ExtResource("6_w5rra")
+region_enabled = true
+region_rect = Rect2(11, 10, 25, 25)
 
 [connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
 [connection signal="timeout" from="ArtifactTimer" to="." method="_on_artifact_timer_timeout"]
