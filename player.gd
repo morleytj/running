@@ -53,3 +53,10 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+
+func game_over():
+	print("Game over man!")
+	queue_free()
+
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	game_over()
