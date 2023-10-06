@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4ayayle4uta0"]
+[gd_scene load_steps=13 format=3 uid="uid://b4ayayle4uta0"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_68f62"]
 [ext_resource type="PackedScene" uid="uid://dy5wmmt36xvma" path="res://floor.tscn" id="1_wjm1g"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cfi4x8dursukx" path="res://falling_platform.tscn" id="2_rgmqg"]
 [ext_resource type="PackedScene" uid="uid://df8ep1r4hi20w" path="res://book.tscn" id="3_uvqxe"]
 [ext_resource type="Texture2D" uid="uid://dp4sxrxdebnbu" path="res://art/flamesprite.png" id="6_w5rra"]
+[ext_resource type="PackedScene" uid="uid://cjeu81olf2ke3" path="res://wall.tscn" id="7_1mund"]
 
 [sub_resource type="Curve2D" id="Curve2D_4l70m"]
 _data = {
@@ -22,6 +23,11 @@ _data = {
 }
 point_count = 4
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p87c1"]
+size = Vector2(472, 16)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wqwvx"]
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_68f62")
 platform_scene = ExtResource("2_rgmqg")
@@ -31,7 +37,7 @@ artifact_scene = ExtResource("3_uvqxe")
 position = Vector2(240, 592)
 
 [node name="Player" parent="." instance=ExtResource("2_ihsri")]
-position = Vector2(448, 312)
+position = Vector2(256, 240)
 
 [node name="PlatformSpawnPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_4l70m")
@@ -71,6 +77,25 @@ scale = Vector2(19.2, 0.959998)
 texture = ExtResource("6_w5rra")
 region_enabled = true
 region_rect = Rect2(11, 10, 25, 25)
+
+[node name="wall" parent="." instance=ExtResource("7_1mund")]
+position = Vector2(-40, 48)
+
+[node name="wall2" parent="." instance=ExtResource("7_1mund")]
+position = Vector2(483, 48)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(120, 0)
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(124, 0)
+shape = SubResource("RectangleShape2D_p87c1")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+position = Vector2(120.5, 4.76837e-07)
+scale = Vector2(459, 16)
+texture = SubResource("CanvasTexture_wqwvx")
 
 [connection signal="timeout" from="PlatformTimer" to="." method="_on_platform_timer_timeout"]
 [connection signal="timeout" from="ArtifactTimer" to="." method="_on_artifact_timer_timeout"]
