@@ -24,7 +24,6 @@ func get_input():
 	
 	#use is_action_just_pressed so as not to multi count jumps
 	if jump_count<jump_max and Input.is_action_just_pressed("jump"):
-		print(jump_count)
 		velocity.y = jump_speed
 		jump_count+=1
 	if right:
@@ -57,6 +56,7 @@ func start(pos):
 func game_over():
 	print("Game over man!")
 	queue_free()
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	game_over()
