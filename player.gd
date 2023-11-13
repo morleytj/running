@@ -9,7 +9,7 @@ var jump_max = 2
 
 signal jumping
 signal landed
-
+signal gameOver
 
 
 
@@ -55,8 +55,8 @@ func start(pos):
 
 func game_over():
 	print("Game over man!")
+	gameOver.emit()
 	queue_free()
-	get_tree().change_scene_to_file("res://menu.tscn")
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	game_over()

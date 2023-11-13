@@ -22,8 +22,6 @@ func new_game():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 
-func game_over():
-	$PlatformTimer.stop()
 
 
 func _on_platform_timer_timeout():
@@ -44,8 +42,7 @@ func _on_platform_timer_timeout():
 	#spawn the platform
 	add_child(newPlat)
 	
-	
-	
+
 
 
 func _on_artifact_timer_timeout():
@@ -59,5 +56,19 @@ func _on_artifact_timer_timeout():
 	#Set random position using the created var
 	newArtifact.position = artifact_spawn_loc.position
 	
-	#spawn the platform
+	#connect signal
+	newArtifact.BookGrabbed.connect(_on_BookGrabbed)
+	
+	#spawn the artifact
 	add_child(newArtifact)
+
+func _on_BookGrabbed():
+	score+=1
+	print(score)
+	$Score.set_text(str(score))
+
+
+func _on_player_game_over():
+	$PlatformTimer.stop()
+	score=0
+	get_tree().change_scene_to_file("res://menu.tscn")
